@@ -1,10 +1,10 @@
-import * as React from 'react';
 import { ChakraProvider, Box } from '@chakra-ui/react';
 import { BrowserRouter , Route, Routes } from 'react-router-dom';
 
 import { AppHeader } from './components/AppHeader';
 import { AppFooter } from './components/AppFooter';
 import { Home } from './containers/Home';
+import { QuizPage } from './containers/QuizPage';
 
 export default function App() {
   return (
@@ -15,6 +15,7 @@ export default function App() {
             <Box flex="1" >
               <Routes>
                 <Route path="/" element={<Home />}/>
+                <Route path="/quiz" element={<QuizPage/>} />
               </Routes>
             </Box>
           <AppFooter />
