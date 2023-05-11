@@ -1,42 +1,18 @@
 import * as React from "react";
 import { Box, Button, Center, Heading, Text, VStack } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-
-type QuizQuestion = {
-  question: string;
-  correctAnswer: string;
-  choices: string[];
-};
+import { useQuizApi } from "../services/qzinApi";
 
 export const QuizPage: React.FC = () => {
-  const [questions, setQuestions] = React.useState<QuizQuestion[]>([]);
+  const navigate = useNavigate();
   const [currentQuestion, setCurrentQuestion] = React.useState(0);
   const [score, setScore] = React.useState(0);
   const [quizFinished, setQuizFinished] = React.useState(false); // 追加
 
-  const navigate = useNavigate();
+  const { getQuiz, questions } = useQuizApi();
+
   // 外部APIからデータとってくる処理
-  React.useEffect(() => {
-    axios
-      .get("https://opentdb.com/api.php?amount=10&difficulty=easy&type=multiple")
-      .then((res) => {
-        const fetchedData = res.data.results.map((question: any) => {
-          const choices = [...question.incorrect_answers, question.correct_answer];
-          const shuffledChoices = choices.sort(() => Math.random() - 0.5);
-          return {
-            question: question.question,
-            correctAnswer: question.correct_answer,
-            choices: shuffledChoices,
-          };
-        });
-        setQuestions(fetchedData);
-        console.log(fetchedData);
-      })
-      .catch(() => {
-        alert("データを正常に取得できませんでした(泣)");
-      });
-  }, []);
+  React.useEffect(() => getQuiz(), []);
 
   // クリック時に`/`に遷移させる関数
   const onBackHome = () => {
@@ -63,15 +39,15 @@ export const QuizPage: React.FC = () => {
 
           {/* 選択肢のボタン */}
           <Box mt={5}>
-			<Center>
-				<VStack spacing={2} w={{ base: "50%", md: "20%" }}>
-					{questions[currentQuestion].choices.map((choice, index) => (
-						<Button key={index} colorScheme="teal" w="full" mt={2} onClick={finishQuiz}>
-							{choice}
-						</Button>
-					))}
-				</VStack>
-			</Center>
+            <Center>
+              <VStack spacing={2} w={{ base: "50%", md: "20%" }}>
+                {questions[currentQuestion].choices.map((choice, index) => (
+                  <Button key={index} colorScheme="teal" w="full" mt={2} onClick={finishQuiz}>
+                    {choice}
+                  </Button>
+                ))}
+              </VStack>
+            </Center>
           </Box>
         </Box>
       ) : (
