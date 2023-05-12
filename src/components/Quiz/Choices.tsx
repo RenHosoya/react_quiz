@@ -8,7 +8,6 @@ type ChoicesProps = {
 };
 
 export const Choices: React.FC<ChoicesProps> = ({ choices, correctAnswer, onAnswer }) => {
-	console.log(correctAnswer);
 	const handleChoiceClick = (choice: string) => {
 		onAnswer(choice === correctAnswer);
 	};
