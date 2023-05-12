@@ -3,6 +3,7 @@ import { Box, Button, Center, Heading, Text, VStack } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useQuizApi } from "../services/qzinApi";
 import { Question } from "../components/Quiz/Question";
+import { Choices } from "../components/Quiz/Choices";
 
 export const QuizPage: React.FC = () => {
   const navigate = useNavigate();
@@ -25,41 +26,41 @@ export const QuizPage: React.FC = () => {
     setQuizFinished(true);
   };
 
-  return (
-    <Box>
-      <Heading as="h2" size="xl" textAlign="center" mt={10}>
-        Quiz
-      </Heading>
+  // 正解時、スコアを増やして次の問題に進む関数
+  const handleAnswer = (isCorrect: Boolean) => {
+    if (isCorrect) {
+      setScore(score + 1);
+    }
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1);
+    } else {
+      finishQuiz();
+    }
+  };
 
-      {/* 問題を表示する */}
-      {questions.length > 0 && currentQuestion < questions.length ? (
-        <>
-          {/* 問題文を表示するコンポーネント */}
-            <Question question={questions[currentQuestion].question} />
 
-            {/* 選択肢を表示するコンポーネント */}
-          <Box mt={5}>
-            <Center>
-              <VStack spacing={2} w={{ base: "50%", md: "20%" }}>
-                {questions[currentQuestion].choices.map((choice, index) => (
-                  <Button key={index} colorScheme="teal" w="full" mt={2} onClick={finishQuiz}>
-                    {choice}
-                  </Button>
-                ))}
-              </VStack>
-            </Center>
-          </Box>
-        </>
-      ) : (
-        <Box mt={10}>
-          <Text fontSize="xl" textAlign="center">
-            Loading questions...
-          </Text>
-        </Box>
-      )}
+return (
+  <Box>
+    <Heading as="h2" size="xl" textAlign="center" mt={10}>
+      Quiz
+    </Heading>
 
-      {/* 結果と戻るボタンを表示する */}
-      {quizFinished && (
+    {/* 問題を表示する */}
+    {questions.length > 0 && currentQuestion < questions.length && !quizFinished ? (
+      <>
+        {/* 問題文を表示するコンポーネント */}
+        <Question question={questions[currentQuestion].question} />
+
+        {/* 選択肢を表示するコンポーネント */}
+        <Choices 
+         choices={questions[currentQuestion].choices}
+         correctAnswer={questions[currentQuestion].correctAnswer}
+         onAnswer={handleAnswer}
+         />
+      </>
+    ) : (
+      /* 結果と戻るボタンを表示する */
+      quizFinished && (
         <Box textAlign="center" mt={8}>
           <Text fontSize="xl">Quiz finished!</Text>
           <Text fontSize="xl">Your score: {score}</Text>
@@ -67,7 +68,8 @@ export const QuizPage: React.FC = () => {
             Back to Home
           </Button>
         </Box>
-      )}
-    </Box>
-  );
+      )
+    )}
+  </Box>
+ );
 };

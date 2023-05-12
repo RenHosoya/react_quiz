@@ -25,7 +25,6 @@ export const useQuizApi = () => {
 			};
 		  });
 		  setQuestions(fetchedData);
-		  console.log(fetchedData);
 		})
 		.catch(() => {
 		  alert("データを正常に取得できませんでした(泣)");
