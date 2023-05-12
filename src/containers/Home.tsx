@@ -12,10 +12,10 @@ export const Home: React.FC = () => {
 	return (
 		<Box>
 			<Heading as="h2" size="x1" textAlign="center" mt={10}>
-				Welocome to Quiz App
+				ようこそ！ Quizの世界へ
 			</Heading>
 			<Text fontSize="xl" textAlign="center" mt={4}>
-				Test your knowledge with our fun quizzes!
+				あなたの実力を試しましょう！
 			</Text>
 			<Box textAlign="center" mt={8}>
 				<Button colorScheme="teal" onClick={onStartQuiz}>

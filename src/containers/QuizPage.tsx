@@ -2,6 +2,7 @@ import * as React from "react";
 import { Box, Button, Center, Heading, Text, VStack } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useQuizApi } from "../services/qzinApi";
+import { Question } from "../components/Quiz/Question";
 
 export const QuizPage: React.FC = () => {
   const navigate = useNavigate();
@@ -32,12 +33,11 @@ export const QuizPage: React.FC = () => {
 
       {/* 問題を表示する */}
       {questions.length > 0 && currentQuestion < questions.length ? (
-        <Box mt={10}>
-          <Text fontSize="x1" textAlign="center">
-            {questions[currentQuestion].question}
-          </Text>
+        <>
+          {/* 問題文を表示するコンポーネント */}
+            <Question question={questions[currentQuestion].question} />
 
-          {/* 選択肢のボタン */}
+            {/* 選択肢を表示するコンポーネント */}
           <Box mt={5}>
             <Center>
               <VStack spacing={2} w={{ base: "50%", md: "20%" }}>
@@ -49,7 +49,7 @@ export const QuizPage: React.FC = () => {
               </VStack>
             </Center>
           </Box>
-        </Box>
+        </>
       ) : (
         <Box mt={10}>
           <Text fontSize="xl" textAlign="center">
