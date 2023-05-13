@@ -12,4 +12,5 @@
     "indentRainbow.includedLanguages": [
         "plaintext"
     ],
+    "editor.tabSize": 2,
 }
