@@ -10,6 +10,9 @@ export const AppHeader: React.FC = () => {
 						Qzin App
 					</Link>
 				</Heading>
+				<Link as={RouterLink} to="/login">
+						ログイン
+					</Link>
 			</Flex>
 		</Box>
 	);

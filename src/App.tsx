@@ -5,6 +5,7 @@ import { AppHeader } from './components/AppHeader';
 import { AppFooter } from './components/AppFooter';
 import { Home } from './containers/Home';
 import { QuizPage } from './containers/QuizPage';
+import { Login } from './containers/Login';
 
 export default function App() {
   return (
@@ -15,7 +16,8 @@ export default function App() {
             <Box flex="1" >
               <Routes>
                 <Route path="/" element={<Home />}/>
-                <Route path="/quiz" element={<QuizPage/>} />
+                <Route path="/quiz" element={<QuizPage />} />
+                <Route path="/login" element={<Login />} />
               </Routes>
             </Box>
           <AppFooter />
