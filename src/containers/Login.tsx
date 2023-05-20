@@ -6,33 +6,13 @@ import {
   FormLabel,
   Input,
   VStack,
-  useToast,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
 
-import { userState } from "../store/userState";
+import { useLoginApi } from "../services/LoginApi";
 
 export const Login: React.FC = () => {
-  const navgate = useNavigate();
-  const toast = useToast();
 
-  const [user, setUser] = useRecoilState(userState);
-
-  const handleLogin = () => {
-    if (user.userName.length === 0 || user.password.length === 0) {
-      toast({
-        title: "Error",
-        description: "Username or password cannot be empty.",
-        status: "error",
-        position: "top",
-        duration: 5000,
-        isClosable: true,
-      });
-    } else {
-      navgate("/");
-    }
-  };
+  const {user, setUser, handleLogin } = useLoginApi();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
