@@ -9,16 +9,18 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+
+import { userState } from "../store/userState";
 
 export const Login: React.FC = () => {
   const navgate = useNavigate();
   const toast = useToast();
 
-  const [userName, setUserName] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [user, setUser] = useRecoilState(userState);
 
   const handleLogin = () => {
-    if (userName.length === 0 || password.length === 0) {
+    if (user.userName.length === 0 || user.password.length === 0) {
       toast({
         title: "Error",
         description: "Username or password cannot be empty.",
@@ -32,6 +34,14 @@ export const Login: React.FC = () => {
     }
   };
 
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setUser((prevLogin) => ({
+      ...prevLogin,
+      [name]: value,
+    }));
+  };
+  
 	return (
     <Box>
       <VStack spacing={4} width="400px" margin="auto" mt={10}>
@@ -39,16 +49,18 @@ export const Login: React.FC = () => {
           <FormLabel>Username</FormLabel>
           <Input
             type="text"
-            value={userName}
-            onChange={(event) => setUserName(event.target.value)}
+            name="userName"
+            value={user.userName}
+            onChange={handleInputChange}
           />
         </FormControl>
         <FormControl id="password">
           <FormLabel>Password</FormLabel>
           <Input
             type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
+            name="password"
+            value={user.password}
+            onChange={handleInputChange}
           />
         </FormControl>
         <Button colorScheme="teal" onClick={handleLogin}>
