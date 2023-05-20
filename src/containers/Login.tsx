@@ -21,8 +21,8 @@ export const Login: React.FC = () => {
       [name]: value,
     }));
   };
-  
-	return (
+
+  return (
     <Box>
       <VStack spacing={4} width="400px" margin="auto" mt={10}>
         <FormControl id="username">
