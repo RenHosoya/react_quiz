@@ -12,14 +12,16 @@ import { useLoginApi } from "../services/LoginApi";
 
 export const Login: React.FC = () => {
 
-  const {user, setUser, handleLogin } = useLoginApi();
+  const [stateName, setStateName] = React.useState("");
+  const [statePass, setStatePass] = React.useState("");
+  const { handleLogin } = useLoginApi(stateName, statePass);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setUser((prevLogin) => ({
-      ...prevLogin,
-      [name]: value,
-    }));
+  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setStateName(event.target.value);
+  };
+
+  const handlePassChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setStatePass(event.target.value);
   };
 
   return (
@@ -29,18 +31,16 @@ export const Login: React.FC = () => {
           <FormLabel>Username</FormLabel>
           <Input
             type="text"
-            name="userName"
-            value={user.userName}
-            onChange={handleInputChange}
+            value={stateName}
+            onChange={handleNameChange}
           />
         </FormControl>
         <FormControl id="password">
           <FormLabel>Password</FormLabel>
           <Input
             type="password"
-            name="password"
-            value={user.password}
-            onChange={handleInputChange}
+            value={statePass}
+            onChange={handlePassChange}
           />
         </FormControl>
         <Button colorScheme="teal" onClick={handleLogin}>

@@ -5,31 +5,16 @@ import { useRecoilState } from "recoil";
 
 import { userState } from "../store/userState";
 
-export const useLoginApi = () => {
+export const useLoginApi = (stateName: string, statePass: string) => {
   const navigate = useNavigate();
   const toast = useToast();
 
   const [user, setUser] = useRecoilState(userState);
 
-  const validateUser = (user: any) => {
-    if (user.userName.length === 0 || user.password.length === 0) {
-      toast({
-        title: "Error",
-        description: "Username or password cannot be empty.",
-        status: "error",
-        position: "top",
-        duration: 5000,
-        isClosable: true,
-      });
-      return false;
-    }
-    return true;
-  };
-
   const validateLogin = (fetchUsers: any) => {
     return fetchUsers.some((fetchUser: any) => {
-      if (fetchUser.username == user.userName && fetchUser.id == user.password) {
-        setUser(fetchUser);
+      if (fetchUser.username == stateName && fetchUser.id == statePass) {
+        setUser({userName: stateName, password: statePass});
         return true;
       }
       return false;
@@ -54,7 +39,6 @@ export const useLoginApi = () => {
   };
 
   const handleLogin = async () => {
-    if (validateUser(user)) {
       const fetchedUsers = await fetchUser();
       if (validateLogin(fetchedUsers)) {
         navigate("/");
@@ -68,8 +52,7 @@ export const useLoginApi = () => {
           isClosable: true,
         });
       }
-    }
   };
 
-  return { user, setUser, handleLogin };
+  return { handleLogin };
 };
