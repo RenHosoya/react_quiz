@@ -1,17 +1,16 @@
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 import { userState } from '../store/userState'; 
 
 import { Box, Flex, Heading, Link } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
-import { memo } from 'react';
 
-export const AppHeader: React.FC = memo(() => {
+export const AppHeader: React.FC = () => {
 	const user = useRecoilValue(userState);
-	const setUser = useSetRecoilState(userState);
+	const resetUser = useResetRecoilState(userState);
 
 	// ログアウトボタンのクリックイベントハンドラ
 	const handleLogout = () => {
-		setUser({userName: "", password: ""});
+		resetUser();
 	};
 
 	return (
@@ -37,4 +36,4 @@ export const AppHeader: React.FC = memo(() => {
 			</Flex>
 		</Box>
 	);
-});
+};
