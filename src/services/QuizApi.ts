@@ -1,12 +1,7 @@
 import axios from "axios";
 import React, { useCallback } from "react"
 
-// 型宣言
-type QuizQuestion = {
-	question: string;
-	correctAnswer: string;
-	choices: string[];
-};
+import { ApiQuestion, ApiResult, QuizQuestion } from "../types/api/question";
 
 // 取得する関数
 export const useQuizApi = () => {
@@ -16,9 +11,9 @@ export const useQuizApi = () => {
 	const getQuiz = useCallback(
 		() => {
 			axios
-			.get("https://opentdb.com/api.php?amount=10&difficulty=easy&type=multiple")
+			.get<ApiResult>("https://opentdb.com/api.php?amount=10&difficulty=easy&type=multiple")
 			.then((res) => {
-				const fetchedData = res.data.results.map((question: any) => {
+				const fetchedData = res.data.results.map((question: ApiQuestion) => {
 					const choices = [...question.incorrect_answers, question.correct_answer];
 					const shuffledChoices = choices.sort(() => Math.random() - 0.5);
 					return {

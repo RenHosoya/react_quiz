@@ -10,17 +10,17 @@ export const QuizPage: React.FC = () => {
 
   const [currentQuestion, setCurrentQuestion] = React.useState(0);
   const [score, setScore] = React.useState(0);
-  const [quizFinished, setQuizFinished] = React.useState(false); // 追加
+  const [quizFinished, setQuizFinished] = React.useState(false);
 
   const { getQuiz, questions } = useQuizApi();
 
   // 外部APIからデータとってくる処理
-  React.useEffect(() => getQuiz(), []);
+  React.useEffect(() => getQuiz(), [getQuiz]);
 
   // クリック時に`/`に遷移させる関数
-  const onBackHome = () => {
+  function onBackHome() {
     navigate("/");
-  };
+  }
 
   // 問題が終了したら quizFinished を true に設定する処理
   const finishQuiz = () => {
