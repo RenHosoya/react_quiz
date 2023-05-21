@@ -2,15 +2,17 @@ import { useRecoilValue, useResetRecoilState } from 'recoil';
 import { userState } from '../store/userState'; 
 
 import { Box, Flex, Heading, Link } from "@chakra-ui/react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 export const AppHeader: React.FC = () => {
+	const navigate = useNavigate();
 	const user = useRecoilValue(userState);
 	const resetUser = useResetRecoilState(userState);
 
 	// ログアウトボタンのクリックイベントハンドラ
 	const handleLogout = () => {
 		resetUser();
+		navigate('/login');
 	};
 
 	return (
