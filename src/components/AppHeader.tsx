@@ -11,6 +11,7 @@ export const AppHeader: React.FC = () => {
 
 	// ログアウトボタンのクリックイベントハンドラ
 	const handleLogout = () => {
+		alert("本当にログアウトしますか？");
 		resetUser();
 		navigate('/login');
 	};
