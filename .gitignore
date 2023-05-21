@@ -10,6 +10,7 @@
 
 # production
 /build
+/bucket-policy.json
 
 # misc
 .DS_Store
