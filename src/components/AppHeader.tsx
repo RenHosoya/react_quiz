@@ -7,11 +7,11 @@ import { memo } from 'react';
 
 export const AppHeader: React.FC = memo(() => {
 	const user = useRecoilValue(userState);
-	const setUser = useSetRecoilState(userState);  // ユーザー情報を更新するためのセッター関数を取得
+	const setUser = useSetRecoilState(userState);
 
 	// ログアウトボタンのクリックイベントハンドラ
 	const handleLogout = () => {
-		setUser({userName: "", password: ""});  // ユーザー情報をnullに設定してログアウト状態にする
+		setUser({userName: "", password: ""});
 	};
 
 	return (
